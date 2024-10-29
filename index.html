@@ -44,13 +44,16 @@
 <script>
   const el = document.querySelector('#first');
   document.body.addEventListener('click', () => {
+    // First
     const firstRect = el.getBoundingClientRect();
     document.body.dataset.state = document.body.dataset.state === 'open' ? 'close' : 'open';
+    // Last 
     const lastRect = el.getBoundingClientRect();
-
+    // Invert
     const dx = firstRect.x - lastRect.x;
     el.style.setProperty('--dx', dx);
     el.dataset.flip = 'invert';
+    // Play
     requestAnimationFrame(() => {
       el.dataset.flip = 'play';
     });
