@@ -1,0 +1,58 @@
+<head>
+  <style>
+    #first {
+      background: aliceblue;
+      width: 100px;
+      height: 100px;
+
+      &[data-flip='invert'] {
+        transform: translateX(calc(var(--dx) * 1px));
+      }
+
+      &[data-flip='play'] {
+        transform: none;
+        transition: transform 0.3s;
+      }
+    }
+
+    #second {
+      display: none;
+      background: burlywood;
+      width: 100px;
+      height: 100px;
+    }
+
+    body {
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &[data-state='open'] {
+        #second {
+          display: block;
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="first"></div>
+  <div id="second"></div>
+</body>
+<script>
+  const el = document.querySelector('#first');
+  document.body.addEventListener('click', () => {
+    const firstRect = el.getBoundingClientRect();
+    document.body.dataset.state = document.body.dataset.state === 'open' ? 'close' : 'open';
+    const lastRect = el.getBoundingClientRect();
+
+    const dx = firstRect.x - lastRect.x;
+    el.style.setProperty('--dx', dx);
+    el.dataset.flip = 'invert';
+    requestAnimationFrame(() => {
+      el.dataset.flip = 'play';
+    });
+  });
+</script>
